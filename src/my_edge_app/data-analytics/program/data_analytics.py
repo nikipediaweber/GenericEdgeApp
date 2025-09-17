@@ -14,6 +14,8 @@ import sys
 import logging
 import statistics
 import json
+import random
+
 
 BROKER_ADDRESS='ie-databus'
 BROKER_PORT=1883
@@ -86,11 +88,19 @@ class DataAnalyzer():
             'stddev_result' : statistics.stdev(values),
             'name' : payload[0]['_measurement'],
         }
+
+        randomresult = {
+
+            'random_result' : random.randint(0, 2000),
+
+        }
+
         self.logger.info('mean calculated: {}'.format(statistics.mean(values)))
         self.logger.info('median calculated: {}'.format(statistics.median(values)))
         self.logger.info('stddev calculated: {} \n ======='.format(statistics.stdev(values)))
         # publish results back on MQTT topic 'StandardKpiResult'
         self.client.publish(topic='StandardKpiResult', payload=json.dumps(result))
+        self.client.publish(topic='RandomResult', payload=json.dumps(randomresult))
         return
 
 #   Callback function for MQTT topic 'Mean' subscription
