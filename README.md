@@ -7,6 +7,7 @@ Creating a first Industrial Edge App on a development environment to deploy it t
   - [Installation](#installation)
   - [Description](#description)
   - [Documentation](#documentation)
+  - [Testing](#testing)
   - [Contribution](#contribution)
   - [License and Legal Information](#license-and-legal-information)
   - [Disclaimer](#disclaimer)
@@ -41,6 +42,66 @@ The app contains three parts – the connectivity to collect the data from the O
   - [Industrial Edge Hub](https://iehub.eu1.edge.siemens.cloud/#/documentation)
   - [Industrial Edge Forum](https://www.siemens.com/industrial-edge-forum)
   - [Industrial Edge landing page](http://siemens.com/industrial-edge)
+
+## Testing
+
+To setup the test-environment for the development of the Industrial Edge App start a Linux virtual Machine or wsl inside the repository.
+
+````PS C:\Repositories\Siemens\GenericEdgeApp\src> wsl````
+
+If there are still some containers running it is advisable to stop and close them so that the system is clean:
+
+Stop all containers:
+
+````docker stop $(docker ps -a -q)````
+
+
+Close all containers:
+
+````docker rm $(docker ps -a -q)````
+
+When youve started wsl or another linux system, open several Tabs of the command line in the different containers folders (my_edge_app, mqtt_boker_mosquitto, node_red) and in each of them run the docker ``docker-compose up -d`` command.
+
+This will compose the docker container according to the docker-compose.yml - file that is stored with each of the containers.
+
+When this is done for all containers, you can run the following command to see which containers are running:
+
+````docker ps````
+
+This should show:
+
+````
+CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS          PORTS                                           NAMES
+0e5d1b0406a4   eclipse-mosquitto:1.6.14   "/docker-entrypoint.…"   16 seconds ago   Up 15 seconds   0.0.0.0:33083->1883/tcp, [::]:33083->1883/tcp   ie-databus
+49feda5f2f7d   influxdb:2.4-alpine        "/entrypoint.sh infl…"   23 seconds ago   Up 22 seconds   0.0.0.0:38086->8086/tcp, [::]:38086->8086/tcp   influxdb
+04c507901b36   data-analytics:v0.0.1      "python -u -m app"       23 seconds ago   Up 22 seconds                                                   data-analytics
+4e9eb4beca1e   nodered:v0.0.1             "docker-entrypoint.s…"   29 seconds ago   Up 29 seconds   0.0.0.0:33080->1880/tcp, [::]:33080->1880/tcp   nodered
+````
+
+When all containers are running correctly InfluxDB and NodeRed can be started to configure the Dashboard and data traffic.
+
+The links to start the are:
+
+NodeRed: http://localhost:33080
+
+InfluxDB: http://localhost:38086
+
+As configured in their respective dockerfiles and compose.yml files.
+  
+For example the NodeRed-Container is Exposed at port 1880 as can be seen in its Dockerfile:
+
+````docker
+# User configuration directory volume
+EXPOSE 1880
+````
+Afterwards this port is rerouted to the Host-Port of 33080 in the compose.yml-file:
+
+```` docker
+    ports:                                    # expose of ports and publish
+      - "33080:1880"                          # map containers port 33080 to host's port 1880
+````
+
+
   
 ## Contribution
 
