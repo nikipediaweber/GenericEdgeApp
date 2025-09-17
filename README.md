@@ -1,4 +1,4 @@
-# My first Industrial Edge App - App Developer Guide
+# Generic Industrial Edge App - App Developer Guide
 
 Creating a first Industrial Edge App on a development environment to deploy it to an Industrial Edge Device based on App Developer Guide.
 
