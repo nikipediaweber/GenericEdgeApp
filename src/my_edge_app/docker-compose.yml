@@ -54,6 +54,30 @@ services:
     networks:                           # define networks connected to container 'influxdb' 
       proxy-redirect:                   # Name of the network
 
+##### MySQL ######
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"  # optional: expose to host; omit in production if not needed
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks:                           # define networks connected to container 'db' 
+      proxy-redirect:                   # Name of the network
+
+
 ###### NETWORK CONFIG ######
 networks:                           # Network interface configuration
   proxy-redirect:                   # Reference 'proxy-redirect' as predefined network
