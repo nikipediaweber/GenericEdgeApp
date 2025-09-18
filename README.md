@@ -2,7 +2,7 @@
 
 Creating a first Industrial Edge App on a development environment to deploy it to an Industrial Edge Device based on App Developer Guide.
 
-- [My first Industrial Edge App - App Developer Guide](#my-first-industrial-edge-app---app-developer-guide)
+- [Generic Industrial Edge App - App Developer Guide](#generic-industrial-edge-app---app-developer-guide)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Description](#description)
@@ -60,7 +60,7 @@ Close all containers:
 
 ````docker rm $(docker ps -a -q)````
 
-When youve started wsl or another linux system, open several Tabs of the command line in the different containers folders (my_edge_app, mqtt_boker_mosquitto, node_red) and in each of them run the docker ``docker-compose up -d`` command.
+When youve started wsl or another linux system, open several Tabs of the command line in the different containers folders (my_edge_app, mqtt_boker_mosquitto, node_red) and in each of them first run the ``docker-compose build`` and afterwards the ``docker-compose up -d`` command.
 
 This will compose the docker container according to the docker-compose.yml - file that is stored with each of the containers.
 

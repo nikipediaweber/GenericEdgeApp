@@ -99,8 +99,10 @@ class DataAnalyzer():
         self.logger.info('median calculated: {}'.format(statistics.median(values)))
         self.logger.info('stddev calculated: {} \n ======='.format(statistics.stdev(values)))
         # publish results back on MQTT topic 'StandardKpiResult'
-        self.client.publish(topic='StandardKpiResult', payload=json.dumps(result))
         self.client.publish(topic='RandomResult', payload=json.dumps(randomresult))
+        #self.client.publish(topic='RandomResult', payload=json.dumps(randomresult), qos=1, retain=True)
+        self.client.publish(topic='StandardKpiResult', payload=json.dumps(result))
+
         return
 
 #   Callback function for MQTT topic 'Mean' subscription
