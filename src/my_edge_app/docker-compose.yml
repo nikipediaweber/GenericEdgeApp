@@ -88,3 +88,4 @@ networks:                           # Network interface configuration
 ###### VOLUMES ######
 volumes:                            # Volumes for containers
   db-backup:
+  db_data:
