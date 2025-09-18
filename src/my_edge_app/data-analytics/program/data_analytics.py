@@ -92,6 +92,7 @@ class DataAnalyzer():
         randomresult = {
 
             'random_result' : random.randint(0, 2000),
+            'name' : 'random_value',
 
         }
 
