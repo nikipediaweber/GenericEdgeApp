@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS measurements (
 DML_INSERT = "INSERT INTO measurements(sensor, value) VALUES(%s, %s)"
 DML_SELECT = "SELECT id, ts, sensor, value FROM measurements ORDER BY id DESC LIMIT 5"
 
-EDITSINGELVALUE = "UPDATE measurements SET value=%s WHERE id=%s"
+UPDATE_SINGLE_VALUE = "UPDATE measurements SET value=%s WHERE id=%s"
 
 
 class DataAnalyzer():
