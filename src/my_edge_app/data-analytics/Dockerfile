@@ -1,4 +1,4 @@
-ARG BASE_IMAGE
+ARG BASE_IMAGE=python:3.9.2-alpine3.13
 FROM ${BASE_IMAGE}
 
 RUN adduser -S nonroot

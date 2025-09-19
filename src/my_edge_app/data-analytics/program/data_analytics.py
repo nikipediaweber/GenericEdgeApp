@@ -29,9 +29,9 @@ PASSWORD='edge'
 
 DB_HOST = os.getenv("DB_HOST", "db")
 DB_PORT = int(os.getenv("DB_PORT", "3306"))
-DB_NAME = os.getenv("DB_NAME", "exampledb")
-DB_USER = os.getenv("DB_USER", "appuser")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+DB_NAME = os.getenv("MYSQL_DATABASE", "exampledb")
+DB_USER = os.getenv("MYSQL_USER", "appuser")
+DB_PASSWORD = os.getenv("MYSQL_PASSWORD", "change_me_strong_too")
 
 
 DDL = """
@@ -76,16 +76,16 @@ class DataAnalyzer():
                 conn.commit()
                 print("Ensured table exists.")
                 # Example writes
-            cur.execute(DML_INSERT, ("sensor_A", 42.0))
-            cur.execute(DML_INSERT, ("sensor_B", 13.37))
-            conn.commit()
-            print("Inserted example rows.")
+                cur.execute(DML_INSERT, ("sensor_A", 42.0))
+                cur.execute(DML_INSERT, ("sensor_B", 13.37))
+                conn.commit()
+                print("Inserted example rows.")
 
-            # Example read
-            cur.execute(DML_SELECT)
-            rows = cur.fetchall()
-            for r in rows:
-                print(r)
+                # Example read
+                cur.execute(DML_SELECT)
+                rows = cur.fetchall()
+                for r in rows:
+                    print(r)
         finally:
             conn.close()
 
